@@ -67,8 +67,8 @@ const QuoteListPage = () => {
     <div className="min-h-screen bg-gray-100 p-4">
    
    <div className="flex flex-row flex-wrap justify-center gap-4">
-  {quotes.map((quote) => (
-    <div key={quote.id} className="relative bg-white shadow-md rounded-md overflow-hidden w-64">
+  {quotes.map((quote, index) => (
+    <div key={index} className="relative bg-white shadow-md rounded-md overflow-hidden w-64">
       {/* Image with overlayed text */}
       {quote.mediaUrl && (
         <div className="relative">
