@@ -8,7 +8,7 @@ import {
 import Login from "./Pages/Login";
 import QuotesList from "./Pages/QuotesList";
 import QuotesForm from "./Pages/QuotesForm";
-
+import PrivateRoute from "./component/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -17,11 +17,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/quoteList",
-    element: <QuotesList/>,
+    element: <PrivateRoute element={<QuotesList />} />,
   },
   {
     path: "/QuotesForm",
-    element: <QuotesForm/>,
+    element: <PrivateRoute element={<QuotesForm />} />,
   },
 ]);
 
