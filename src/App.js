@@ -7,12 +7,18 @@ import {
 
 import QuotesForm from "./Pages/QuotesForm";
 import Login from "./Pages/Login";
+import QuotesList from "./Pages/QuotesList";
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login/>,
-  }
+  },
+  {
+    path: "/quoteList",
+    element: <QuotesList/>,
+  },
 ]);
 
 function App() {
