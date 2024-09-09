@@ -6,8 +6,9 @@ const QuoteForm = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [mediaUrl, setMediaUrl] = useState('');
   const [isUploading, setIsUploading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbmR5IiwiaWF0IjoxNzI1ODg3ODU3LCJleHAiOjE3MjU4OTE0NTd9.4iVS6oKeNQdLOWwmBbJ06oxxBOxCeVcmMBYVOwG_GF0`; // Replace with actual token
+  const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbmR5IiwiaWF0IjoxNzI1ODk0MDQyLCJleHAiOjE3MjU4OTc2NDJ9.TM0YswGPuYXWx6nOQbsAplYHFA4_Ec3EFst8C6uWNxg`; 
 
   // Handle file selection
   const handleFileChange = (e) => {
@@ -30,8 +31,8 @@ const QuoteForm = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response.data[0])
-      setMediaUrl(response.data[0]); 
+      console.log(response.data[0].url)
+      setMediaUrl(response.data[0].url); 
     } catch (error) {
       console.error('Error uploading image:', error);
     } finally {
@@ -43,6 +44,7 @@ const QuoteForm = () => {
   const createQuote = async () => {
     if (!quoteText || !mediaUrl) return alert('Please enter the quote text and upload an image.');
 
+    setIsSubmitting(true)
     try {
       const response = await axios.post(
         'https://assignment.stage.crafto.app/postQuote',
@@ -58,8 +60,14 @@ const QuoteForm = () => {
         }
       );
       alert('Quote created successfully!');
+      setQuoteText('')
+      setMediaUrl('')
+      setIsSubmitting(false)
     } catch (error) {
+      setQuoteText('')
+      setMediaUrl('')
       console.error('Error creating quote:', error);
+      setIsSubmitting(false)
     }
   };
 
@@ -97,7 +105,7 @@ const QuoteForm = () => {
         className="bg-green-500 text-white px-4 py-2 rounded"
         disabled={!quoteText || !mediaUrl}
       >
-        Submit Quote
+        {isSubmitting ? 'Submitting...' : 'Submit Quote'}
       </button>
     </div>
   );
