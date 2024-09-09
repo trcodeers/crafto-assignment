@@ -5,9 +5,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import QuotesForm from "./Pages/QuotesForm";
 import Login from "./Pages/Login";
 import QuotesList from "./Pages/QuotesList";
+import QuotesForm from "./Pages/QuotesForm";
 
 
 const router = createBrowserRouter([
@@ -18,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/quoteList",
     element: <QuotesList/>,
+  },
+  {
+    path: "/QuotesForm",
+    element: <QuotesForm/>,
   },
 ]);
 
