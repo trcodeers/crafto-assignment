@@ -7,7 +7,7 @@ const QuoteForm = () => {
   const [mediaUrl, setMediaUrl] = useState('');
   const [isUploading, setIsUploading] = useState(false);
 
-  const token = 'your_token_here'; // Add your token
+  const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbmR5IiwiaWF0IjoxNzI1ODg3ODU3LCJleHAiOjE3MjU4OTE0NTd9.4iVS6oKeNQdLOWwmBbJ06oxxBOxCeVcmMBYVOwG_GF0`; // Replace with actual token
 
   // Handle file selection
   const handleFileChange = (e) => {
@@ -24,14 +24,14 @@ const QuoteForm = () => {
     formData.append('file', selectedFile);
 
     try {
-      const response = await axios.post('https://your-media-upload-api-endpoint.com', formData, {
+      const response = await axios.post('https://crafto.app/crafto/v1.0/media/assignment/upload', formData, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `${token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
-      
-      setMediaUrl(response.data.mediaUrl); // Assuming mediaUrl is returned in response
+      console.log(response.data[0])
+      setMediaUrl(response.data[0]); 
     } catch (error) {
       console.error('Error uploading image:', error);
     } finally {
@@ -52,7 +52,7 @@ const QuoteForm = () => {
         },
         {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `${token}`,
             'Content-Type': 'application/json',
           },
         }
