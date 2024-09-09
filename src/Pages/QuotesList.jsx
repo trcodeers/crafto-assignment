@@ -10,13 +10,13 @@ const QuoteListPage = () => {
   const [newMediaUrl, setNewMediaUrl] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbmR5IiwiaWF0IjoxNzI1ODg3ODU3LCJleHAiOjE3MjU4OTE0NTd9.4iVS6oKeNQdLOWwmBbJ06oxxBOxCeVcmMBYVOwG_GF0`; // Replace with actual token
-  axios.defaults.headers.common['Authorization'] = `${token}`;
-
   const fetchQuotes = async () => {
     if (!hasMore || loading) return;
 
     setLoading(true);
+    const token = localStorage.getItem('authToken')
+    axios.defaults.headers.common['Authorization'] = `${token}`;
+
     try {
       const res = await axios.get(`https://assignment.stage.crafto.app/getQuotes?limit=5&offset=${page * 5}`);
       const newQuotes = res.data.data;
