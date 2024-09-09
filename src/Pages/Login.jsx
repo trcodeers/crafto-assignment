@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const LoginForm = () => {
+const Login = () => {
   const [username, setUsername] = useState('');
-  const [otp, setOtp] = useState('1234');
+  const [otp, setOtp] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -27,64 +32,47 @@ const LoginForm = () => {
     }
   };
 
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <form onSubmit={handleLogin} className="w-96 bg-white p-6 rounded shadow-md">
+        <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
+
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
-        <form onSubmit={handleLogin}>
-          {/* Username Input */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="username">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="Enter your username"
-              required
-            />
-          </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Username</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            required
+          />
+        </div>
 
-          {/* OTP Input */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700" htmlFor="otp">
-              OTP
-            </label>
-            <input
-              type="text"
-              id="otp"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="Enter your OTP"
-              required
-            />
-          </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">OTP</label>
+          <input
+            type="text"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md"
+            placeholder="1234" // Default OTP for demonstration
+          />
+        </div>
 
-          {/* Login Button */}
-          <div>
-            <button
-              type="submit"
-              className="w-full bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
-            >
-              Login
-            </button>
-          </div>
-        </form>
-      </div>
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full py-2 px-4 rounded-md text-white ${
+            loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
+          }`}
+        >
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+      </form>
     </div>
   );
 };
 
-// Placeholder function for login logic
-const loginUser = (username, otp) => {
-  console.log(`Logging in with Username: ${username}, OTP: ${otp}`);
-};
-
-export default LoginForm;
+export default Login;
