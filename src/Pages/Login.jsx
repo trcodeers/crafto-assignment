@@ -36,12 +36,13 @@ const Login = () => {
       // Redirect to the quotes list page
       navigate('/quoteList');
     } catch (err) {
-      setError('Login failed. Please check your credentials.');
+      notify('Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }
   };
   
+  const notify = (message) => toast(message);
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
