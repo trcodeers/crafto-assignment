@@ -1,28 +1,38 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import httpService from "../utility/httpService";
+import { isAuthenticated } from "../utility/auth";
+
 
 const Login = () => {
+
   const [username, setUsername] = useState('');
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if(isAuthenticated()){
+      navigate('/quoteList')
+    } 
+  }, []);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
-
+    
     try {
-      const response = await axios.post('https://assignment.stage.crafto.app/login', {
+      // Make the login API call using httpService
+      const response = await httpService.post('/login', {
         username: username,
-        otp: otp || '1234', // default OTP for demo purposes
+        otp: otp || '1234', // Default OTP for demo purposes
       });
-
+  
       // Store the token in localStorage if login is successful
       localStorage.setItem('authToken', response.data.token);
-
+  
       // Redirect to the quotes list page
       navigate('/quoteList');
     } catch (err) {
@@ -31,6 +41,7 @@ const Login = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
