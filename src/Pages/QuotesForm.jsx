@@ -49,8 +49,8 @@ const QuoteForm = () => {
 
   // Submit quote creation
   const createQuote = async () => {
-    if (!quoteText || !mediaUrl) return alert('Please enter the quote text and upload an image.');
-
+    if (!quoteText || !mediaUrl) return 
+    
     setIsSubmitting(true);
 
     try {
@@ -109,8 +109,8 @@ const QuoteForm = () => {
         {/* Submit Button */}
         <button
           onClick={createQuote}
-          className="bg-green-500 text-white px-4 py-2 rounded"
-          disabled={!quoteText || !mediaUrl}
+          className={`text-white px-4 py-2 rounded ${(isSubmitting || !quoteText || !mediaUrl) ? 'bg-gray-300' : 'bg-blue-500'}`}
+          // disabled={!quoteText || !mediaUrl}
         >
           {isSubmitting ? 'Submitting...' : 'Submit Quote'}
         </button>
