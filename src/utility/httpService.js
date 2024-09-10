@@ -1,34 +1,70 @@
-import axios from "axios";
-import { setup } from 'axios-cache-adapter'
+import { setup } from 'axios-cache-adapter';
 
+const baseURL = 'https://assignment.stage.crafto.app';
+
+// Create Axios instance with cache adapter
 const api = setup({
-    baseURL: 'https://api-shiningmerit.onrender.com',
-  
-    cache: {
-      maxAge: 18 * 60 * 60 * 1000 // 18 hours
+  baseURL: baseURL,
+  cache: {
+    maxAge: 18 * 60 * 60 * 1000, // 18 hours
+  },
+});
+
+// Request interceptor to attach token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `${token}`;
     }
-})
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-const apiClientGet = (url, cachable = false) =>{
-    
-    if(!cachable){  
-        return api.get(url, { cache: { maxAge : 0 } })
+// Response interceptor to handle errors globally
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      console.error('Unauthorized - Redirecting to login');
+      window.location.href = '/';
     }
-    
-    return api.get(url)
+    return Promise.reject(error);
+  }
+);
 
-}
+// API Client for GET requests (with optional cache control)
+const apiClientGet = (url, cachable = false) => {
+  if (!cachable) {
+    // Disable cache for this request
+    return api.get(url, { cache: { maxAge: 0 } });
+  }
+  return api.get(url); // Cachable request
+};
 
-const apiClientPost = (url, body) =>{
-    return axios.post(`https://api-shiningmerit.onrender.com${url}`, body)
-}
+// API Client for POST requests (uses base URL and attaches token)
+const apiClientPost = (url, body) => {
+  return api.post(url, body);
+};
 
+// Other HTTP methods: PUT and DELETE
+const apiClientPut = (url, body) => {
+  return api.put(url, body);
+};
+
+const apiClientDelete = (url) => {
+  return api.delete(url);
+};
+
+// Expose HTTP methods through a service object
 const httpService = {
-    get : apiClientGet,
-    post : apiClientPost,
-    put : axios.put,
-    delete : axios.delete,
-}
+  get: apiClientGet,
+  post: apiClientPost,
+  put: apiClientPut,
+  delete: apiClientDelete,
+};
 
- 
 export default httpService;
