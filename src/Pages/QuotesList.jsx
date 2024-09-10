@@ -10,9 +10,6 @@ const QuoteListPage = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [newQuoteText, setNewQuoteText] = useState('');
-  const [newMediaUrl, setNewMediaUrl] = useState('');
-  const [showModal, setShowModal] = useState(false);
 
   const fetchQuotes = async () => {
     if (!hasMore || loading) return;
@@ -33,6 +30,8 @@ const QuoteListPage = () => {
       }
     } catch (error) {
       console.error("Error fetching quotes", error);
+      localStorage.removeItem('authToken')
+      navigate('/')
     } finally {
       setLoading(false);
     }
