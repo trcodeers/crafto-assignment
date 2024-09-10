@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import httpService from "../utility/httpService";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const QuoteListPage = () => {
 
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate(); 
 
   const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,15 +17,14 @@ const QuoteListPage = () => {
 
   const fetchQuotes = async () => {
     if (!hasMore || loading) return;
-
+  
     setLoading(true);
-    const token = localStorage.getItem('authToken')
-    axios.defaults.headers.common['Authorization'] = `${token}`;
-
+    
     try {
-      const res = await axios.get(`https://assignment.stage.crafto.app/getQuotes?limit=5&offset=${page * 5}`);
+      const res = await httpService.get(`/getQuotes?limit=5&offset=${page * 5}`, true); // Use httpService
+  
       const newQuotes = res.data.data;
-
+  
       if (newQuotes.length === 0) {
         setHasMore(false); // Stop pagination if no new quotes
       } else {
@@ -33,13 +32,17 @@ const QuoteListPage = () => {
         setPage(prevPage => prevPage + 1);
       }
     } catch (error) {
-      console.error("Error fetching quotes", error.response.data.error);
-      // localStorage.removeItem('authToken')
-      // navigate('/')
+      if (error.response?.status === 401) { // Check for unauthorized error
+        localStorage.removeItem('authToken'); // Remove token
+        navigate('/'); // Redirect to login page
+      } else {
+        console.error("Error fetching quotes", error.response?.data?.error || error.message);
+      }
     } finally {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchQuotes();
@@ -82,11 +85,11 @@ const QuoteListPage = () => {
 
 
         {/* Loading spinner */}
-        {loading && <p className="text-center text-gray-500 mt-4">Loading...</p>}
+        {loading && page === 0 && <p className="text-center text-gray-500 mt-4">Loading...</p>}
 
 
         {/* See More button */}
-        {hasMore && (
+        {hasMore && page !== 0 && (
           <div className="flex justify-center my-4">
             <button
               className={`px-6 py-2 bg-blue-500 text-white font-semibold rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''
