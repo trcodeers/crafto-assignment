@@ -10,6 +10,8 @@ import QuotesList from "./Pages/QuotesList";
 import QuotesForm from "./Pages/QuotesForm";
 import PrivateRoute from "./component/PrivateRoute";
 
+
+
 const router = createBrowserRouter([
   {
     path: "/",

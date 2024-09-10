@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const QuoteForm = () => {
   const [quoteText, setQuoteText] = useState('');
@@ -31,8 +33,9 @@ const QuoteForm = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response.data[0].url)
-      setMediaUrl(response.data[0].url); 
+      // console.log(response.data[0].url)
+      setMediaUrl(response.data[0].url);
+      notify('Image uploaded') 
     } catch (error) {
       console.error('Error uploading image:', error);
     } finally {
@@ -59,19 +62,25 @@ const QuoteForm = () => {
           },
         }
       );
-      alert('Quote created successfully!');
+      notify('Quote created successfully!');
       setQuoteText('')
       setMediaUrl('')
       setIsSubmitting(false)
     } catch (error) {
       setQuoteText('')
       setMediaUrl('')
+      notify('Something went wrong!');
       console.error('Error creating quote:', error);
       setIsSubmitting(false)
     }
   };
 
+  const notify = (message) => toast(message);
+
   return (
+    <>
+          <ToastContainer />
+
     <div className="max-w-md mx-auto p-4">
       <h2 className="text-xl font-bold mb-4">Create a New Quote</h2>
 
@@ -108,6 +117,7 @@ const QuoteForm = () => {
         {isSubmitting ? 'Submitting...' : 'Submit Quote'}
       </button>
     </div>
+    </>
   );
 };
 
