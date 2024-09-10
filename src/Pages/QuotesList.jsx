@@ -43,10 +43,9 @@ const QuoteListPage = () => {
 
   useEffect(() => {
     fetchQuotes();
-    notify()
   }, []);
 
-  const notify = () => toast("Wow so easy!");
+  const notify = (message) => toast(message);
 
 
   return (
