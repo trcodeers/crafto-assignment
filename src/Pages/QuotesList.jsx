@@ -44,27 +44,31 @@ const QuoteListPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 p-4">
 
-      <div className="flex flex-row flex-wrap justify-center gap-4">
-        {quotes.map((quote, index) => (
-          <div key={index} className="relative bg-white shadow-md rounded-md overflow-hidden w-64">
-            {/* Image with overlayed text */}
-            {quote.mediaUrl && (
+      <div className="flex flex-row flex-wrap justify-center">
+        {quotes.map((quote) => (
+          <div key={quote.id} className="relative bg-white shadow-md rounded-md overflow-hidden m-4 w-60 flex flex-col justify-between">
+            {quote.mediaUrl ? (
               <div className="relative">
                 <img src={quote.mediaUrl} alt="Quote" className="w-full h-48 object-cover" />
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                   <p className="text-white text-lg font-semibold px-4 text-center">{quote.text}</p>
                 </div>
               </div>
+            ) : (
+              <div className="w-full h-48 bg-gray-300 flex items-center justify-center">
+                <p className="text-black text-lg font-semibold px-4 text-center">{quote.text}</p>
+              </div>
             )}
 
-            {/* Username and creation date */}
-            <div className="p-4">
+            {/* Username and creation date - fixed at the bottom */}
+            <div className="p-4 mt-auto">
               <p className="text-gray-700 font-medium">By {quote.username}</p>
               <p className="text-gray-500 text-sm">Created on {new Date(quote.createdAt).toLocaleString()}</p>
             </div>
           </div>
         ))}
       </div>
+
 
       {/* Loading spinner */}
       {loading && <p className="text-center text-gray-500 mt-4">Loading...</p>}
@@ -74,9 +78,8 @@ const QuoteListPage = () => {
       {hasMore && (
         <div className="flex justify-center my-4">
           <button
-            className={`px-6 py-2 bg-blue-500 text-white font-semibold rounded ${
-              loading ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
+            className={`px-6 py-2 bg-blue-500 text-white font-semibold rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             onClick={fetchQuotes}
             disabled={loading}
           >
