@@ -50,7 +50,7 @@ const QuoteForm = () => {
   // Submit quote creation
   const createQuote = async () => {
     if (!quoteText || !mediaUrl) return 
-    
+
     setIsSubmitting(true);
 
     try {
