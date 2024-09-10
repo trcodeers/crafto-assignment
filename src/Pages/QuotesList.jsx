@@ -69,6 +69,23 @@ const QuoteListPage = () => {
       {/* Loading spinner */}
       {loading && <p className="text-center text-gray-500 mt-4">Loading...</p>}
 
+
+      {/* See More button */}
+      {hasMore && (
+        <div className="flex justify-center my-4">
+          <button
+            className={`px-6 py-2 bg-blue-500 text-white font-semibold rounded ${
+              loading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            onClick={fetchQuotes}
+            disabled={loading}
+          >
+            {loading ? 'Loading...' : 'See More'}
+          </button>
+        </div>
+      )}
+
+
       {/* Floating Action Button (FAB) */}
       <button
         onClick={() => navigate('/QuotesForm')}
