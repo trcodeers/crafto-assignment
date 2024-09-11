@@ -6,7 +6,7 @@ const baseURL = 'https://assignment.stage.crafto.app';
 const api = setup({
   baseURL: baseURL,
   cache: {
-    maxAge: 18 * 60 * 60 * 1000, // 18 hours
+    maxAge: 15 * 60 * 60, // 15 mins
   },
 });
 
@@ -27,6 +27,7 @@ api.interceptors.request.use(
 
 // API Client for GET requests (with optional cache control)
 const apiClientGet = (url, cachable = true) => {
+  console.log(url, cachable)
   if (!cachable) {
     // Disable cache for this request
     return api.get(url, { cache: { maxAge: 0 } });
