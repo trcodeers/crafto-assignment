@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import httpService from "../utility/httpService";
 import { useNavigate } from 'react-router-dom';
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const QuoteForm = () => {
   
@@ -73,12 +70,9 @@ const QuoteForm = () => {
     }
   };
 
-  const notify = (message) => toast(message);
-
   return (
     <>
 
-      <ToastContainer />
       <div className="max-w-md mx-auto p-4">
         <h2 className="text-xl font-bold mb-4">Create a New Quote</h2>
 
@@ -110,7 +104,6 @@ const QuoteForm = () => {
         <button
           onClick={createQuote}
           className={`text-white px-4 py-2 rounded ${(isSubmitting || !quoteText || !mediaUrl) ? 'bg-gray-300' : 'bg-blue-500'}`}
-          // disabled={!quoteText || !mediaUrl}
         >
           {isSubmitting ? 'Submitting...' : 'Submit Quote'}
         </button>

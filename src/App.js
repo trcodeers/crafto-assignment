@@ -1,9 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Login from "./Pages/Login";
 import QuotesList from "./Pages/QuotesList";
@@ -29,7 +30,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
+    <>
+        <ToastContainer position="top-right" autoClose={3000} />
     <RouterProvider router={router} />
+    
+    </>
   );
 }
 
