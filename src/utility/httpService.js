@@ -24,17 +24,6 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle errors globally
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      console.error('Unauthorized - Redirecting to login');
-      window.location.href = '/';
-    }
-    return Promise.reject(error);
-  }
-);
 
 // API Client for GET requests (with optional cache control)
 const apiClientGet = (url, cachable = false) => {

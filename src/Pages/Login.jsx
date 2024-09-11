@@ -2,16 +2,16 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import httpService from "../utility/httpService";
 import { isAuthenticated } from "../utility/auth";
-
+import { notify } from "../utility/toastService";
 
 const Login = () => {
 
   const [username, setUsername] = useState('');
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState('1234');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     if(isAuthenticated()){
       navigate('/quoteList')
@@ -21,15 +21,13 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
     
     try {
-      // Make the login API call using httpService
       const response = await httpService.post('/login', {
         username: username,
-        otp: otp || '1234', // Default OTP for demo purposes
+        otp: otp, 
       });
-  
+
       // Store the token in localStorage if login is successful
       localStorage.setItem('authToken', response.data.token);
   
@@ -42,8 +40,6 @@ const Login = () => {
     }
   };
   
-  const notify = (message) => toast(message);
-
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form onSubmit={handleLogin} className="w-96 bg-white p-6 rounded shadow-md">
