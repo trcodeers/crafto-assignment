@@ -8,7 +8,6 @@ const Login = () => {
 
   const [username, setUsername] = useState('');
   const [otp, setOtp] = useState('1234');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   
@@ -44,8 +43,6 @@ const Login = () => {
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <form onSubmit={handleLogin} className="w-96 bg-white p-6 rounded shadow-md">
         <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
-
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
         <div className="mb-4">
           <label className="block text-gray-700 mb-2">Username</label>
