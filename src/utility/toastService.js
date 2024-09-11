@@ -1,8 +1,6 @@
-// toastService.js
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Utility function to show toast messages
 export const notify = (message, type = "default") => {
   switch (type) {
     case "success":

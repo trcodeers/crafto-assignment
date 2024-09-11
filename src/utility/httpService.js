@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an instance of axios
 const httpService = axios.create({
-  baseURL: 'https://assignment.stage.crafto.app', // Replace with your API's base URL
+  baseURL: 'https://assignment.stage.crafto.app',
   timeout: 10000, // 10 seconds timeout
 });
 
