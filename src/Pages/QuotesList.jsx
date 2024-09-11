@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import httpService from "../utility/httpService";
+import { notify } from "../utility/toastService";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import QuoteCard from '../component/QuoteCard';
-
 
 const QuoteListPage = () => {
 
@@ -45,18 +43,13 @@ const QuoteListPage = () => {
     }
   };
   
-
   useEffect(() => {
     fetchQuotes();
   }, []);
 
-  const notify = (message) => toast(message);
-
   return (
     <>
-      
-      <ToastContainer />
-
+    
       <div className="min-h-screen bg-gray-100 p-4">
 
         <div className="flex flex-row flex-wrap justify-center">
@@ -84,7 +77,6 @@ const QuoteListPage = () => {
           </div>
         )}
 
-
         {/* Floating Action Button (FAB) */}
         <button
           onClick={() => navigate('/QuotesForm')}
@@ -92,7 +84,6 @@ const QuoteListPage = () => {
         >
           +
         </button>
-
 
       </div>
     
