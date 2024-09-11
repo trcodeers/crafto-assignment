@@ -1,12 +1,11 @@
 
-
 const QuoteCard = (props) => {
 
     const { quote } = props
 
     return (
         <>
-            <div key={quote.id} className="relative bg-white shadow-md rounded-md overflow-hidden m-4 w-60 flex flex-col justify-between">
+            <div className="relative bg-white shadow-md rounded-md overflow-hidden m-4 w-60 flex flex-col justify-between">
                 {quote.mediaUrl ? (
                     <div className="relative">
                         <img src={quote.mediaUrl} alt="Quote" className="w-full h-48 object-cover" />
