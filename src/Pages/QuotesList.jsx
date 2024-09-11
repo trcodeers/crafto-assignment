@@ -20,7 +20,7 @@ const QuoteListPage = () => {
     setLoading(true);
     
     try {
-      const res = await httpService.get(`/getQuotes?limit=5&offset=${page * 5}`, true); // Use httpService
+      const res = await httpService.get(`/getQuotes?limit=5&offset=${page * 5}`); // Use httpService
   
       const newQuotes = res.data.data;
   
