@@ -35,8 +35,7 @@ const QuoteListPage = () => {
         localStorage.removeItem('authToken'); // Remove token
         navigate('/'); // Redirect to login page
       } else {
-        notify(error.response?.data?.error || error.message)
-        console.error("Error fetching quotes", error.response?.data?.error || error.message);
+        notify(error.response?.data?.error || error?.message || 'Something went wrong')
       }
     } finally {
       setLoading(false);
