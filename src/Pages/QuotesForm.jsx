@@ -71,8 +71,18 @@ const QuoteForm = () => {
     }
   };
 
+  const handleBack = () => {
+    navigate(-1); // This takes the user one step back in history
+  };
+
   return (
     <>
+    <button
+      onClick={handleBack}
+      className="bg-gray-300 text-black px-4 py-2 rounded ml-[10%] mt-10"
+    >
+      Back
+    </button>
 
       <div className="max-w-md mx-auto p-4">
         <h2 className="text-xl font-bold mb-4">Create a New Quote</h2>

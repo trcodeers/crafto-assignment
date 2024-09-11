@@ -49,7 +49,7 @@ const QuoteListPage = () => {
   return (
     <>
     
-      <div className="min-h-screen bg-gray-100 p-4">
+      <div className="min-h-screen bg-gray-100 p-10 ">
 
         <div className="flex flex-row flex-wrap justify-center">
           {quotes.map((quote, index) => (
