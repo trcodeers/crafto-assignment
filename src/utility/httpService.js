@@ -26,7 +26,7 @@ api.interceptors.request.use(
 
 
 // API Client for GET requests (with optional cache control)
-const apiClientGet = (url, cachable = false) => {
+const apiClientGet = (url, cachable = true) => {
   if (!cachable) {
     // Disable cache for this request
     return api.get(url, { cache: { maxAge: 0 } });
